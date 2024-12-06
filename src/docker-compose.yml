@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  tiktok_api:
+    build:
+      context: .
+    container_name: TiktokApi
+    volumes:
+      - .:/var/www/html
+    ports:
+      - "8030:80"
+    environment:
+      - DB_HOST=tiktok_db        # Use the service name `tiktok_db` as the host
+      - DB_PORT=3306             # Use the default MySQL port
+      - DB_DATABASE=TiktokSocialMediaDB
+      - DB_USERNAME=root
+      - DB_PASSWORD=rip@123
+    depends_on:
+      - tiktok_db
+    networks:
+      - tiktok_network
+
+  tiktok_db:
+    image: mysql:8.0
+    container_name: TiktokSocialMediaDB
+    environment:
+      MYSQL_ROOT_PASSWORD: rip@123
+      MYSQL_DATABASE: TiktokSocialMediaDB
+    ports:
+      - "3301:3306"  # Expose MySQL port to the host (for debugging), but internal communication will use port 3306
+    networks:
+      - tiktok_network
+
+networks:
+  tiktok_network:
+    driver: bridge
