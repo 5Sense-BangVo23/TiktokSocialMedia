@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: backend-tiktok-sd
+server:
+  port: 8094
+  servlet:
+    context-path: /api
+  
